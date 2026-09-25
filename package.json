@@ -1,0 +1,21 @@
+{
+  "name": "fmm-plugin-template-node",
+  "version": "1.0.0",
+  "description": "A starting point for a Five More Minutes plugin in Node.js: a small, dependency-free client, an event helper, and a working example.",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20.3"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test \"test/*.test.js\"",
+    "check": "tsc --noEmit -p jsconfig.json",
+    "validate": "echo Run the registry's validator on fmm-plugin.json: node ../fmm-plugin-registry/scripts/validate.mjs --manifest fmm-plugin.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}
