@@ -112,7 +112,8 @@ export async function startMock({ scopes = ALL, key = KEY, localOnly = false, li
       }
 
       case 'POST /timer/start':
-        return send(need('timer:start') ?? start(body.minutes, body.message));
+        // `until` is a clock time in the household's zone; the mock just treats it as an hour away.
+        return send(need('timer:start') ?? start(body.minutes ?? (body.until ? 60 : 0), body.message));
 
       case 'POST /timer/extend': {
         const denied = need('timer:extend');
