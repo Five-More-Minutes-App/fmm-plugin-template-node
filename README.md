@@ -33,6 +33,7 @@ npm start -- --start 30 "Homework"
 | | |
 |---|---|
 | `src/client.js` | The whole client: `me()`, `state()`, `start()`, `extend()`, `stop()`, `cancel()` and `watch()`. Read it; it is short on purpose. |
+| `src/webhook.js` | `verifyWebhook()`: checks that a webhook really came from Five More Minutes. |
 | `src/events.js` | `eventsBetween(previous, next)`: `timer-started`, `timer-extended`, `timer-ended`, `lock-started`, `lock-ended`, `came-online`, `went-offline`. |
 | `src/index.js` | The example. Connects, says what the key may do, and logs what happens. **Replace the loop's body.** |
 | `test/` | Tests, including a faithful mock of the API you can reuse. `npm test` |
@@ -87,6 +88,26 @@ for await (const state of fmm.watch({ signal })) {
 It holds a request open (`?wait=25&since=<signal>`) that the service answers the moment a parent presses a
 button, so your plugin reacts within a moment and makes about two requests a minute while nothing
 happens. It stops, with the error, when trying again cannot help: a revoked key, for instance.
+
+### Being told instead of asking (webhooks)
+
+Instead of following the computer, a plugin can give Five More Minutes an address and be **sent** a request when
+something happens: time started, added or ended, the computer locked or unlocked, online or offline. Set it with the
+key (`PUT /webhook`, see the [API page](https://github.com/five-more-minutes/FiveMoreMinutes/blob/main/docs/plugins/api-v1.md)),
+and check every delivery before believing it:
+
+```js
+import { verifyWebhook } from './src/webhook.js';
+
+// `rawBody` is the body exactly as it arrived: a string or a Buffer, not parsed and re-serialised.
+const result = verifyWebhook({ apiKey: process.env.FMM_API_KEY, headers: request.headers, body: rawBody });
+if (!result.ok) return reply(401);           // result.reason is for your log; it never holds the key
+const { type, state } = result.event;        // 'timer.started', and the computer's state at that moment
+```
+
+It checks the signature in constant time, refuses a delivery more than five minutes old (the time is signed, so it
+cannot be replayed), and only then reads the body. Deliveries are in order and best effort: read `state()` when your
+plugin starts and whenever it has been quiet, and use webhooks to hear sooner.
 
 ### When it goes wrong
 
