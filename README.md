@@ -1,6 +1,6 @@
 # Five More Minutes plugin starter (Node.js)
 
-A starting point for connecting something in your home to [Five More Minutes](https://github.com/five-more-minutes/FiveMoreMinutes):
+A starting point for connecting something in your home to [Five More Minutes](https://github.com/five-more-minutes/fmm-app):
 a small, dependency-free client, a helper that turns "the state now" into "what just happened", and a
 working example. Fork it, rename it, and put your idea in the middle.
 
@@ -73,7 +73,7 @@ Every command answers with the new state, in the same shape as `GET /state`:
 
 `timer` and `lock` are `null` when there is none. Times are absolute instants: count down from
 `endsAt`, do not count `secondsLeft` yourself. The full reference, with every error, is in the
-[API documentation](https://github.com/five-more-minutes/FiveMoreMinutes/blob/main/docs/plugins/api-v1.md).
+[API documentation](https://github.com/five-more-minutes/fmm-app/blob/main/docs/plugins/api-v1.md).
 
 ### Following a computer
 
@@ -93,7 +93,7 @@ happens. It stops, with the error, when trying again cannot help: a revoked key,
 
 Instead of following the computer, a plugin can give Five More Minutes an address and be **sent** a request when
 something happens: time started, added or ended, the computer locked or unlocked, online or offline. Set it with the
-key (`PUT /webhook`, see the [API page](https://github.com/five-more-minutes/FiveMoreMinutes/blob/main/docs/plugins/api-v1.md)),
+key (`PUT /webhook`, see the [API page](https://github.com/five-more-minutes/fmm-app/blob/main/docs/plugins/api-v1.md)),
 and check every delivery before believing it:
 
 ```js
