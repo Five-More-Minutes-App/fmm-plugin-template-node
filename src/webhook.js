@@ -14,6 +14,9 @@
 //   const { type, state } = result.event;       // 'timer.started', and the computer's state at that moment
 //
 // Check the RAW body. Re-serialising parsed JSON changes the bytes, and the signature is over the bytes.
+//
+// A delivery can be replayed within the tolerance window (five minutes) by someone who has seen it. If acting twice would
+// matter, remember `deliveryId` for a little longer than the window and refuse one you have already handled.
 
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
