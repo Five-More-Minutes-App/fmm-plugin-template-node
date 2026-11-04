@@ -15,7 +15,7 @@
     "validate": "echo Run the registry's validator on fmm-plugin.json: node ../fmm-plugin-registry/scripts/validate.mjs --manifest fmm-plugin.json"
   },
   "devDependencies": {
-    "@types/node": "^22.10.0",
-    "typescript": "^5.7.0"
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
   }
 }
